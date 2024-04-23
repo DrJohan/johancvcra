@@ -66,9 +66,9 @@ datadrivencv::build_network_logo(CV$entries_data)
 
 ```{r}
 if(params$pdf_mode){
-  cat("View this CV online with links at drjohan.github.io/johancracv/index.html")
+  cat("View this CV online with links at drjohan.github.io/johancvcra/index.html")
 } else {
-  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/DrJohan/johancracv/drjohan_cv.pdf).")
+  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/DrJohan/johancvcra/drjohan_cv.pdf).")
 }
 ```
 
@@ -176,8 +176,8 @@ CV %<>% print_section('events_attended')
 
 ::: aside
 
-The source code is available <i class="fa fa-github"></i> [Github](https://github.com/DrJohan/johancracv).
-Last updated on `r Sys.Date()`. The most recent version of this CV is [available here](drjohan.github.io/johancracv/index.html)
+The source code is available <i class="fa fa-github"></i> [Github](https://github.com/DrJohan/johancvcra).
+Last updated on `r Sys.Date()`. The most recent version of this CV is [available here](drjohan.github.io/johancvcra/index.html)
 
 :::
 
