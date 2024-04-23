@@ -136,6 +136,14 @@ CV %<>% print_section('short_courses')
 <br>
 <br>
 <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 
 Research Experience {data-icon=laptop}
 --------------------------------------------------------------------------------
@@ -167,13 +175,9 @@ CV %<>% print_section('events_attended')
 <!-- -------------------------------------------------------------------------------- -->
 
 ::: aside
-I regularly blog on statistics and data science on my personal blog that are built using [blogdown](https://github.com/rstudio/blogdown) package. You can find my blog here [Johan Ibrahim](drjohan.rbind.io)
-
 
 The source code is available <i class="fa fa-github"></i> [Github](https://github.com/DrJohan/johancracv).
 Last updated on `r Sys.Date()`. The most recent version of this CV is [available here](drjohan.github.io/johancracv/index.html)
-
-
 
 :::
 
