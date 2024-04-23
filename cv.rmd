@@ -1,15 +1,25 @@
 ---
-title: "Dr Johan Bin Ibrahim's CV"
-author: Dr Johan Bin Ibrahim
+title: "Johan Ibrahim's CV"
+author: Johan Ibrahim
 date: "`r Sys.Date()`"
 params:
   pdf_mode:
     value: true
 output:
   pagedown::html_resume:
-    css: ['dd_cv.css', 'resume']
+    css: ['dd_cv.css', 'custom.css', 'resume']
     self_contained: true
 ---
+<!-- inicio academic icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+<!-- final academic icons -->
+ 
+<!-- start font awesome -->
+<script src="https://kit.fontawesome.com/e82584e357.js" crossorigin="anonymous"></script>
+
+ 
+<!-- final font awesome -->
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
@@ -22,9 +32,11 @@ source("cv_printing_functions.r")
 
 # Read in all data and initialize a CV printer object
 CV <- create_CV_object(
-  data_location = "https://docs.google.com/spreadsheets/d/17D2pWqUjeWcpXfDgAwBTbis560FqDZLbjyXAzdLiEuo/edit#gid=917338460",  
+  data_location = "https://docs.google.com/spreadsheets/d/1_Y3HPpenl9Q0rovGZUmto6kxSCrtv8BsTGSfdk-xdXk/edit?usp=sharing",  
   pdf_mode = params$pdf_mode
 )
+
+CV$entries_data <- CV$entries_data %>% dplyr::filter(in_resume == TRUE)
 
 ```
 
@@ -43,7 +55,7 @@ if(params$pdf_mode) {
 
 
 Aside
-================================================================================
+=================================================================================
 
 ```{r}
 # Build interactive network of positions colored by section
@@ -54,22 +66,30 @@ datadrivencv::build_network_logo(CV$entries_data)
 
 ```{r}
 if(params$pdf_mode){
-  cat("View this CV online with links at _C:/Users/Dr Johan Ibrahim/Documents/Projects/cracv_")
+  cat("View this CV online with links at drjohan.github.io/drjohancv/index.html")
 } else {
-  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](C:/Users/Dr Johan Ibrahim/Documents/Projects/cracv)")
+  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/DrJohan/drjohancv/raw/main/drjohan_cv.pdf).")
 }
 ```
 
 Contact {#contact}
 --------------------------------------------------------------------------------
+- <i class="fa fa-envelope"></i> johan@ms.rcsiucd.edu.my
+- <i class="fab fa-linkedin-in"></i>  [Johan_Ibrahim](http://linkedin.com/in/johan_ibrahim)
+- <i class="fa-brands fa-whatsapp"></i> +60126466545
 
-```{r}
-CV %>% print_contact_info()
-```
+Research Skills {#skills}
+---------------------------------------------------------------------------------
 
+- ICH-GCP
+- Clinical Trial Management
+- Site Management
+- Infectious Disease Modelling
+- Scientific Literature Review
+- Experimental Design and Analysis
+- Artificial Intelligence
 
-
-Language Skills {#skills}
+Skills {#skills}
 --------------------------------------------------------------------------------
 
 ```{r}
@@ -77,30 +97,28 @@ CV %>% print_skill_bars()
 ```
 
 
-
-Disclaimer {#disclaimer}
---------------------------------------------------------------------------------
-
-Made with the R package [**pagedown**](https://github.com/rstudio/pagedown). 
-
-The source code is available [on github.com/nstrayer/cv](C:/Users/Dr Johan Ibrahim/Documents/Projects/cracv).
-
-Last updated on `r Sys.Date()`.
-
-
-
 Main
 ================================================================================
 
-Dr Johan Bin Ibrahim {#title}
+Johan Ibrahim {#title}
 --------------------------------------------------------------------------------
 
+Hi!! My name is Johan Ibrahim. Currently I'm working as Clinical Research Associate with [Aesculape CRO Belgium-Singapore](https://www.aesculape.com). 
+
+
+I describe myself as dedicated, highly motivated and enthusiastic medical graduate with in-depth knowledge of research design and methodologies, medical statistic, big data capture, curation, manipulation and visualization and has been certified Good Clinical Practice researcher from National Institute of Health (NIH) Malaysia.Able to use own initiative and work as part of a team under pressure to meet challenging deadlines/objectives. 
+
+Work Experience {data-icon=suitcase}
+--------------------------------------------------------------------------------
+::: aside
+
+I'm a medical doctor by training. In the past, I've been served people in Indonesia and Malaysia and actively involve in search and rescue during Earthquake in Indonesia, 2006. Then, I decided to have a change in career after being inspired by my mentor Prof Ronan Conroy and decided to pursue a career in research as medical statistician cum data scientist. 
+
+:::
+
 ```{r}
-# Note the special double pipe so we modify the CV object in place
-CV %<>% print_text_block("intro") 
+CV %<>% print_section('working_experience')
 ```
-
-
 
 Education {data-icon=graduation-cap data-concise=true}
 --------------------------------------------------------------------------------
@@ -110,95 +128,83 @@ CV %<>% print_section('education')
 ```
 
 
+Selected Short Courses Attended {data-icon=book} 
+--------------------------------------------------------------------------------
+
+```{r}
+CV %<>% print_section('short_courses')
+```
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
 
 Research Experience {data-icon=laptop}
 --------------------------------------------------------------------------------
-
-```{r}
-CV %<>% print_section('research_positions')
-```
-
-
-
-Industry Experience {data-icon=suitcase}
---------------------------------------------------------------------------------
-
 ::: aside
-```{r}
-CV %<>% print_text_block('industy_experience_aside')
-```
+
+I'm an active participant in the local R community [Malaysia R User Group](https://www.meetup.com/MY-RUserGroup/). I'm also one of the moderator in [Analisa Data Dengan R Studio group](https://www.facebook.com/groups/R4data) and actively giving guidance for RStudio beginner.
+
+
+
 :::
 
+
+
+
+
 ```{r}
-CV %<>% print_section('industry_positions')
+CV %<>% print_section('research_projects')
 ```
 
-<!-- These breaks just force a new page so section doesnt get cut off -->
-<br>
-<br>
-<br>
 
-Teaching Experience {data-icon=chalkboard-teacher}
+Selected Events Attended {data-icon=calendar-check}
 --------------------------------------------------------------------------------
 
-::: aside
 ```{r}
-CV %<>% print_text_block('teaching_experience_aside')
+CV %<>% print_section('events_attended')
 ```
-:::
-
-```{r}
-CV %<>% print_section('teaching_positions')
-```
-
 
 
 Selected Data Science Writing {data-icon=chart-line}
 --------------------------------------------------------------------------------
 
 ::: aside
-```{r}
-CV %<>% print_text_block('data_science_writing_aside')
-```
+I regularly blog on statistics and data science on my personal blog that are built using [blogdown](https://github.com/rstudio/blogdown) package. You can find my blog here [Johan Ibrahim](drjohan.rbind.io)
+
+
+
+
+The source code is available <i class="fa fa-github"></i> [Github](https://github.com/DrJohan/johancracv).
+Last updated on `r Sys.Date()`. The most recent version of this CV is [available here](drjohan.github.io/johancracv/index.html)
+
+
+
 :::
 
-```{r}
-CV %<>% print_section('data_science_writings')
-```
-
-
-
-Selected Press (About)  {data-icon=newspaper}
---------------------------------------------------------------------------------
-
-```{r}
-CV %<>% print_section('about_me_press')
-```
-
-
-<br>
-<br>
-
-
-Selected Press (By)  {data-icon=newspaper}
---------------------------------------------------------------------------------
-
-```{r}
-CV %<>% print_section('by_me_press')
-```
-
-
-
-Selected Publications, Posters, and Talks {data-icon=book}
---------------------------------------------------------------------------------
-
-```{r}
-CV %<>% print_section('academic_articles')
-```
-
-
-
-```{r}
-CV %<>% print_links()
-```
 
