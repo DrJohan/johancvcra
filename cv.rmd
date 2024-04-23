@@ -1,6 +1,6 @@
 ---
 title: "Johan Ibrahim's CV"
-author: Johan Ibrahim
+author: Dr Johan Ibrahim
 date: "`r Sys.Date()`"
 params:
   pdf_mode:
@@ -100,7 +100,7 @@ CV %>% print_skill_bars()
 Main
 ================================================================================
 
-Johan Ibrahim {#title}
+Dr Johan Ibrahim {#title}
 --------------------------------------------------------------------------------
 
 Hi!! My name is Johan Ibrahim. Currently I'm working as Clinical Research Associate with [Aesculape CRO Belgium-Singapore](https://www.aesculape.com). 
@@ -112,7 +112,7 @@ Work Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
 ::: aside
 
-I'm a medical doctor by training. In the past, I've been served people in Indonesia and Malaysia and actively involve in search and rescue during Earthquake in Indonesia, 2006. Then, I decided to have a change in career after being inspired by my mentor Prof Ronan Conroy and decided to pursue a career in research as medical statistician cum data scientist. 
+I'm a medical doctor by training. In the past, I've served people in Indonesia and Malaysia and actively involve in search and rescue during Earthquake in Indonesia, 2006. Then, I decided to have a change in career after being inspired by my mentor Prof Ronan Conroy and decided to pursue a career in research as medical statistician cum data scientist. 
 
 :::
 
