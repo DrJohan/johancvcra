@@ -139,10 +139,6 @@ CV %<>% print_section('short_courses')
 <br>
 <br>
 <br>
-<br>
-<br>
-<br>
-<br>
 
 
 Research Experience {data-icon=laptop}
