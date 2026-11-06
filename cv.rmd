@@ -68,7 +68,7 @@ datadrivencv::build_network_logo(CV$entries_data)
 if(params$pdf_mode){
   cat("View this CV online at drjohan.github.io/johancvcra/index.html")
 } else {
-  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://github.com/DrJohan/johancvcra/raw/main/drjohan_cv.pdf).")
+  cat("[<i class='fas fa-download'></i> Download a PDF of this CV](drjohan_cv.pdf).")
 }
 ```
 
@@ -144,9 +144,9 @@ CV %<>% print_section('short_courses')
 Research Experience {data-icon=laptop}
 --------------------------------------------------------------------------------
 ::: aside
-I'm a medical doctor by training. In the past, I've served people in Indonesia and Malaysia and actively involve in search and rescue during Earthquake in Indonesia, 2006. Then, I decided to have a change in career after being inspired by my mentor Prof Ronan Conroy and decided to pursue a career in research as medical statistician cum data scientist. 
+I'm a medical doctor by training. In the past, I've served people in Indonesia and Malaysia and actively involve in search and rescue during Earthquake in Indonesia, 2006. Then, I decided to have a change in direction and started working as Clinical Research Associate. In this role, I have the opportunity to help people by ensuring that clinical trials are conducted ethically and safely.
 
-I'm an active participant in the local R community [Malaysia R User Group](https://www.meetup.com/MY-RUserGroup/). I'm also one of the moderator in [Analisa Data Dengan R Studio group](https://www.facebook.com/groups/R4data) and actively giving guidance for RStudio beginner.
+I'm an active participant in the local R community [Malaysia R User Group](https://www.meetup.com/MY-RUserGroup/). I'm also one of the moderator in [Analisa Data Dengan R Studio group](https://www.facebook.com/groups/analisaR/).
 
 :::
 
@@ -176,5 +176,6 @@ The source code is available <i class="fa fa-github"></i> [Github](https://githu
 Last updated on `r Sys.Date()`. The most recent version of this CV is [available here](drjohan.github.io/johancvcra/index.html)
 
 :::
+
 
 
