@@ -38,6 +38,17 @@ CV <- create_CV_object(
 
 CV$entries_data <- CV$entries_data %>% dplyr::filter(in_resume == TRUE)
 
+# Confirmed end date; keep the remaining spreadsheet entries unchanged.
+aesculape_role <- CV$entries_data$title == "Clinical Research Associate II" &
+  CV$entries_data$institution == "Aesculape Belgium-Singapore CRO"
+CV$entries_data$end[aesculape_role] <- "Oct 2024"
+CV$entries_data$end_year[aesculape_role] <- "2024"
+CV$entries_data$no_end[aesculape_role] <- "FALSE"
+CV$entries_data$has_end[aesculape_role] <- "TRUE"
+CV$entries_data$timeline[aesculape_role] <- paste(
+  "Oct 2024 -", CV$entries_data$start[aesculape_role]
+)
+
 ```
 
 
@@ -113,6 +124,22 @@ Work Experience {data-icon=suitcase}
 ::: aside
 
 :::
+
+### Clinic Manager
+
+Klinik Inocare
+
+N/A
+
+Present - Apr 2025
+
+- Lead the rebuilding of clinic operations following a management takeover, establishing a revised approach to wound care and regenerative therapy services.
+- Establish operating procedures, patient workflows, documentation practices and follow-up processes.
+- Manage staffing, supplier coordination, financial administration and the operational requirements of patient services.
+- Work with the clinic management software developer to translate operational needs into requirements for patient records, appointments, billing and inventory management.
+- Provide ongoing feedback to refine the software already in use and specify requirements for automated patient follow-up.
+- Define patient-data capture and export requirements with the developer to support planned exports of CDISC Analysis Data Model (ADaM) datasets for study analysis.
+- Coordinate the collection and completeness of data required for an ongoing study evaluating the safety of stem cell therapy in patients with knee osteoarthritis.
 
 ```{r}
 CV %<>% print_section('working_experience')
