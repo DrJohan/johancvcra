@@ -121,9 +121,6 @@ I describe myself as dedicated, highly motivated and enthusiastic medical gradua
 
 Work Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
-::: aside
-
-:::
 
 ### Clinic Manager
 
