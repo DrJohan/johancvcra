@@ -77,7 +77,7 @@ datadrivencv::build_network_logo(CV$entries_data)
 
 ```{r}
 if(params$pdf_mode){
-  cat("View this CV online at drjohan.github.io/johancvcra/index.html")
+  cat("[View this CV online](https://drjohan.github.io/johancvcra/)")
 } else {
   cat("[<i class='fas fa-download'></i> Download a PDF of this CV](https://drjohan.github.io/johancvcra/drjohan_cv.pdf).")
 }
@@ -165,7 +165,7 @@ CV %<>% print_section('short_courses')
 <br>
 
 
-Research Experience {data-icon=laptop}
+Research Experience {data-icon=laptop `r if (params$pdf_mode) ".page-break-before" else ""`}
 --------------------------------------------------------------------------------
 ::: aside
 I'm a medical doctor by training. In the past, I've served people in Indonesia and Malaysia and actively involve in search and rescue during Earthquake in Indonesia, 2006. Then, I decided to have a change in direction and started working as Clinical Research Associate. In this role, I have the opportunity to help people by ensuring that clinical trials are conducted ethically and safely.
@@ -197,7 +197,7 @@ CV %<>% print_section('events_attended')
 ::: aside
 
 The source code is available <i class="fa fa-github"></i> [Github](https://github.com/DrJohan/johancvcra).
-Last updated on `r Sys.Date()`. The most recent version of this CV is [available here](drjohan.github.io/johancvcra/index.html)
+Last updated on `r Sys.Date()`. The most recent version of this CV is [available here](https://drjohan.github.io/johancvcra/index.html)
 
 :::
 
