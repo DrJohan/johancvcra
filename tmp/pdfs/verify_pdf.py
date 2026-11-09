@@ -2,7 +2,9 @@ from pathlib import Path
 from html.parser import HTMLParser
 import difflib
 import re
+from collections import Counter
 from pypdf import PdfReader
+import pdfplumber
 from PIL import Image, ImageOps, ImageDraw
 
 ROOT = Path.cwd()
@@ -38,6 +40,31 @@ def main_text(path):
     parser.feed(path.read_text(encoding='utf-8'))
     return clean(' '.join(parser.parts))
 
+class HTMLChecks(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.ids = []
+        self.scripts = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if 'id' in attrs:
+            self.ids.append(attrs['id'])
+        if tag == 'script' and 'src' in attrs:
+            self.scripts.append(attrs['src'])
+
+for path in (ROOT / 'index.html', ROOT / 'tmp/pdfs/cv-pdf.html'):
+    html = path.read_text(encoding='utf-8')
+    parser = HTMLChecks()
+    parser.feed(html)
+    duplicates = [key for key, count in Counter(parser.ids).items() if count > 1]
+    assert not duplicates, f'Duplicate HTML IDs: {duplicates}'
+    assert '<mark class="intro-highlight"><strong>Hi my name is Dr Johan Ibrahim.</strong></mark>' in html
+    assert 'background-color: #fff2a8' in html
+    assert 'print-color-adjust: exact' in html
+    assert not any('Rm9yYmlkZGVu' in src for src in parser.scripts)
+print('HTML IDs, bold introduction, print highlight, and script sources verified.')
+
 website = main_text(ROOT / 'index.html')
 pdf_html = main_text(ROOT / 'tmp/pdfs/cv-pdf.html')
 if website != pdf_html:
@@ -49,7 +76,8 @@ print('All CV main content matches the website source.')
 reader = PdfReader(ROOT / 'output/pdf/drjohan_cv.pdf')
 text = clean(' '.join(page.extract_text() for page in reader.pages))
 expected = [
-    'I am Dr Johan Ibrahim, Clinic Manager at Klinik Inocare on Jalan Pahang, Kuala Lumpur.',
+    'Hi my name is Dr Johan Ibrahim.',
+    'I am the Clinic Manager at Klinik Inocare on Jalan Pahang, Kuala Lumpur.',
     'My work brings together medical training, clinical research experience and operational leadership to strengthen clinic services and support patient care.',
     'My experience spans clinical practice, clinical trial monitoring and health research, supported by a strong foundation in research design, medical statistics, data management and visualisation.',
     'With Good Clinical Practice certification, I am committed to ethical research, data quality and patient safety.',
@@ -73,6 +101,21 @@ assert 'https://drjohan.github.io/johancvcra/' in uris
 assert not any(uri.startswith('file:') for uri in uris)
 print('Updated introduction and PDF links verified.')
 print('Link destinations:', uris)
+
+with pdfplumber.open(ROOT / 'output/pdf/drjohan_cv.pdf') as pdf:
+    intro_words = pdf.pages[0].extract_words(extra_attrs=['fontname'])
+    hi = next(word for word in intro_words if word['text'] == 'Hi')
+    intro = [word for word in intro_words if abs(word['top'] - hi['top']) < 0.1 and word['x0'] <= 260]
+    assert ' '.join(word['text'] for word in intro).startswith('Hi my name is Dr Johan Ibrahim.')
+    highlights = []
+    for rect in pdf.pages[0].rects:
+        color = rect.get('non_stroking_color')
+        if isinstance(color, (tuple, list)) and len(color) == 3:
+            if all(abs(actual - wanted) < 0.02 for actual, wanted in zip(color, (1, 242/255, 168/255))):
+                highlights.append(rect)
+    assert highlights, 'PDF highlight background missing'
+    assert any(rect['top'] <= hi['top'] and rect['bottom'] >= hi['bottom'] for rect in highlights)
+print('PDF introduction text and yellow background verified.')
 
 previews = sorted((ROOT / 'tmp/pdfs').glob('cv-page-*.png'))
 assert len(previews) == len(reader.pages)

@@ -15,11 +15,7 @@ output:
 
 <!-- final academic icons -->
  
-<!-- start font awesome -->
-<script src="https://kit.fontawesome.com/e82584e357.js" crossorigin="anonymous"></script>
-
- 
-<!-- final font awesome -->
+<!-- Font Awesome is already included by pagedown::html_resume. -->
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
@@ -89,7 +85,7 @@ Contact {#contact}
 - <i class="fab fa-linkedin-in"></i>  [Johan_Ibrahim](http://linkedin.com/in/johan_ibrahim)
 - <i class="fa-brands fa-whatsapp"></i> +60126466545
 
-Research Skills {#skills}
+Research Skills {#research-skills}
 ---------------------------------------------------------------------------------
 
 - ICH-GCP
@@ -114,7 +110,7 @@ Main
 Dr Johan Ibrahim {#title}
 --------------------------------------------------------------------------------
 
-I am Dr Johan Ibrahim, Clinic Manager at Klinik Inocare on Jalan Pahang, Kuala Lumpur. My work brings together medical training, clinical research experience and operational leadership to strengthen clinic services and support patient care.
+<mark class="intro-highlight"><strong>Hi my name is Dr Johan Ibrahim.</strong></mark> I am the Clinic Manager at Klinik Inocare on Jalan Pahang, Kuala Lumpur. My work brings together medical training, clinical research experience and operational leadership to strengthen clinic services and support patient care.
 
 
 My experience spans clinical practice, clinical trial monitoring and health research, supported by a strong foundation in research design, medical statistics, data management and visualisation. With Good Clinical Practice certification, I am committed to ethical research, data quality and patient safety. I combine analytical thinking with a collaborative approach to solve problems, improve workflows and deliver results in demanding healthcare settings.
@@ -168,9 +164,9 @@ CV %<>% print_section('short_courses')
 Research Experience {data-icon=laptop `r if (params$pdf_mode) ".page-break-before" else ""`}
 --------------------------------------------------------------------------------
 ::: aside
-I'm a medical doctor by training. In the past, I've served people in Indonesia and Malaysia and actively involve in search and rescue during Earthquake in Indonesia, 2006. Then, I decided to have a change in direction and started working as Clinical Research Associate. In this role, I have the opportunity to help people by ensuring that clinical trials are conducted ethically and safely.
+I'm a medical doctor by training. In the past, I've served people in Indonesia and Malaysia and was actively involved in search and rescue following the 2006 earthquake in Indonesia. I then decided to change direction and began working as a Clinical Research Associate. In this role, I had the opportunity to help people by ensuring that clinical trials were conducted ethically and safely.
 
-I'm an active participant in the local R community [Malaysia R User Group](https://www.meetup.com/MY-RUserGroup/). I'm also one of the moderator in [Analisa Data Dengan R Studio group](https://www.facebook.com/groups/analisaR/).
+I'm an active participant in the local R community [Malaysia R User Group](https://www.meetup.com/MY-RUserGroup/). I'm also one of the moderators in the [Analisa Data Dengan R Studio group](https://www.facebook.com/groups/analisaR/).
 
 :::
 

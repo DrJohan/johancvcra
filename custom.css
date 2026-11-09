@@ -50,15 +50,18 @@ a:hover {
 }
 
 
-b::title{
-  	color: #88398a;
-	font-weight: 600;
+mark.intro-highlight {
+  background-color: #fff2a8;
+  color: inherit;
+  padding: 0.05em 0.15em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
-
-p::title {
-
-	text-align: justify;
+mark.intro-highlight strong {
+  font-weight: 700;
 }
 
 .skill-bar{
