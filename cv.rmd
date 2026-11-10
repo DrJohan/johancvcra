@@ -261,7 +261,7 @@ CV %<>% print_section('short_courses')
 <br>
 
 
-Research Experience {data-icon=laptop `r if (params$pdf_mode) ".page-break-before" else ""`}
+Research Experience {data-icon=laptop .page-break-before}
 --------------------------------------------------------------------------------
 ::: aside
 My medical background includes clinical service in Indonesia and Malaysia and participation in search and rescue following the 2006 earthquake in Indonesia. Subsequent work as a Clinical Research Associate brought this clinical experience to site monitoring, protocol compliance and the protection of trial participants.
