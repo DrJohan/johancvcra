@@ -34,7 +34,7 @@ CV <- create_CV_object(
 
 CV$entries_data <- CV$entries_data %>% dplyr::filter(in_resume == TRUE)
 
-# Confirmed end date; keep the remaining spreadsheet entries unchanged.
+# Confirmed end date; the source spreadsheet remains unchanged.
 aesculape_role <- CV$entries_data$title == "Clinical Research Associate II" &
   CV$entries_data$institution == "Aesculape Belgium-Singapore CRO"
 CV$entries_data$end[aesculape_role] <- "Oct 2024"
@@ -44,6 +44,106 @@ CV$entries_data$has_end[aesculape_role] <- "TRUE"
 CV$entries_data$timeline[aesculape_role] <- paste(
   "Oct 2024 -", CV$entries_data$start[aesculape_role]
 )
+
+# Keep content revisions here so both CV formats use the same wording.
+# Match each entry explicitly to avoid applying a revision to the wrong role.
+revise_entry <- function(section, title, new_title = NULL, bullets = NULL) {
+  entry <- which(CV$entries_data$section == section &
+                   trimws(CV$entries_data$title) == trimws(title))
+  if (length(entry) != 1L) {
+    stop("Expected one CV entry for revision: ", section, " / ", title)
+  }
+  if (!is.null(new_title)) {
+    CV$entries_data$title[entry] <<- new_title
+  }
+  if (!is.null(bullets)) {
+    CV$entries_data$description_bullets[entry] <<-
+      paste0("- ", paste(bullets, collapse = "\n- "))
+  }
+}
+
+revise_entry("working_experience", "Clinical Research Associate II", bullets = c(
+  "Independently conducted site initiation, monitoring and close-out visits, maintaining oversight of site performance, study timelines and adherence to trial protocols. Monitoring responsibilities included a Phase III neurology trial and a Phase IV aesthetics trial in Singapore.",
+  "Led the resolution of complex data discrepancies through site monitoring and clinical data review to support data integrity. Used data management tools to track study progress and monitor the recording, processing and reporting of clinical data against regulatory requirements.",
+  "Provided guidance on regulatory requirements and changes relevant to trial conduct. Contributed to the development and review of study protocols, informed consent forms and other study documents to support compliance with applicable requirements."
+))
+
+revise_entry("working_experience", "Clinical Research Associate I", bullets = c(
+  "Supported the Clinical Project Manager and multidisciplinary Clinical Trial Team (CTT), working across medical writing, statistics, data management, monitoring partners, drug supply, regulatory affairs and safety. Helped coordinate study deliverables against agreed timelines, budgets, quality standards and operational procedures.",
+  "Liaised directly with investigator sites, Clinical Research Associates (CRAs), CRO partners and vendors to support study set-up and ongoing conduct. Reviewed site performance, protocol deviations and ongoing study risks, and worked with the trial team to resolve issues in a timely manner.",
+  "Collaborated with medical monitors, internal and external CRAs, data managers, statisticians and third-party study partners on ongoing medical and scientific data review. Supported the timely transfer and availability of high-quality study data, and coordinated analysis and interpretation for initial results."
+))
+
+revise_entry("working_experience", "Data Enumerator, MARS Project", bullets = c(
+  "Collected data for the MARS household survey, conducted by the Social Wellbeing Research Centre, University of Malaya, to examine ageing among adults aged 40 and above. The nationwide survey was designed to run every two years, targeting 9,000 eligible respondents.",
+  "Conducted participant interviews and physical examinations in accordance with the MARS protocol.",
+  "Maintained the accuracy of participant data recorded in the MARS database."
+))
+
+revise_entry("working_experience", "House Officer", bullets = c(
+  "Provided frontline inpatient and outpatient care during clinical rotations.",
+  "Assisted with major orthopaedic operations, including five total knee replacements and five total hip replacements.",
+  "Communicated with heads of department, consultants, medical officers and colleagues, and with patients and members of the public, to support clinical care across inpatient and outpatient settings."
+))
+
+revise_entry("education", "PostGraduate Diploma In Health Research",
+  new_title = "Postgraduate Diploma in Health Research",
+  bullets = "Trained in health research under the supervision of Prof Ron&#225;n M. Conroy, DSc, a medical statistician and contributing author to the SCORE project."
+)
+revise_entry("education", "Medical Degree (M.D)",
+  new_title = "Medical Degree (M.D.)",
+  bullets = c(
+    "Thesis: Effect of Cisplatin on Leydig Cells in Mice",
+    "Recipient of the Gadjah Mada University Young Investigator Award, 2003-2004."
+  )
+)
+
+revise_entry("research_projects",
+  "5 years experience of school scoliosis screening program. A clinical evaluation of epidemiology, effectiveness and limitation of scoliosis screening in Perak population from 2011 to 2015",
+  new_title = "Clinical evaluation of a five-year school scoliosis screening programme in Perak (2011-2015): epidemiology, effectiveness and limitations"
+)
+revise_entry("research_projects",
+  "Prevalence of psychiatric patient in home care in selected states of peninsular Malaysia and its aasociation with psychiatric support staff ",
+  new_title = "Psychiatric patients receiving home care in selected states of Peninsular Malaysia: prevalence and association with psychiatric support staffing"
+)
+revise_entry("research_projects",
+  "Poor sleep quality and its associated risk factors among elderly in Temerloh, Pahang",
+  new_title = "Poor sleep quality and associated risk factors among older adults in Temerloh, Pahang"
+)
+revise_entry("research_projects",
+  "Knowledge, Attitude and Practice among Temerloh district nursery/kindergarten in identify and managing common emergencies among pre-school children",
+  new_title = "Knowledge, attitudes and practices in identifying and managing common emergencies in preschool children at nurseries and kindergartens in Temerloh district"
+)
+
+# Correct spelling, capitalisation and venue wording without changing dates,
+# qualifications, course completion status or software proficiency ratings.
+CV$entries_data$institution <- dplyr::recode(
+  CV$entries_data$institution,
+  "John Hopkins University" = "Johns Hopkins University",
+  "University Science Malaysia" = "Universiti Sains Malaysia",
+  "SWRC, University Malaya" = "SWRC, University of Malaya",
+  "Sultan Ahmad Shah Airport(Malaysia Airport Berhard)" =
+    "Sultan Ahmad Shah Airport (Malaysia Airports Berhad)",
+  "RStudio Inc" = "RStudio, Inc."
+)
+CV$entries_data$loc <- dplyr::recode(
+  CV$entries_data$loc,
+  "Dublin,IE" = "Dublin, IE",
+  "EdX Online" = "edX Online",
+  "Zoom Meeting" = "Online (Zoom)",
+  "RStudio-Zoom Meeting" = "Online (Zoom)",
+  "Perdana University-Zoom Meeting" = "Online (Zoom)",
+  "USM-Webex Meeting" = "Online (Webex)"
+)
+CV$entries_data$title <- dplyr::recode(
+  CV$entries_data$title,
+  "System Thinking In Public Health" = "Systems Thinking in Public Health",
+  "9th National Conference for Clinical Research(NCCR)" =
+    "9th National Conference for Clinical Research (NCCR)",
+  "rstudio::global(2021) " = "rstudio::global(2021)",
+  "State Disaster Drill " = "State Disaster Drill"
+)
+CV$skills$skill <- dplyr::recode(CV$skills$skill, "Tensorflow" = "TensorFlow")
 
 ```
 
@@ -89,12 +189,12 @@ Research Skills {#research-skills}
 ---------------------------------------------------------------------------------
 
 - ICH-GCP
-- Clinical Trial Management
+- Clinical Trial Monitoring
 - Site Management
-- Infectious Disease Modelling
-- Scientific Literature Review
-- Experimental Design and Analysis
-- Artificial Intelligence
+- Protocol Compliance
+- Clinical Data Review and Quality
+- Research Design and Statistical Analysis
+- Medical Statistics
 
 Skills {#skills}
 --------------------------------------------------------------------------------
@@ -110,10 +210,10 @@ Main
 Dr Johan Ibrahim {#title}
 --------------------------------------------------------------------------------
 
-<mark class="intro-highlight"><strong>Hi my name is Dr Johan Ibrahim.</strong></mark> I am the Clinic Manager at Klinik Inocare on Jalan Pahang, Kuala Lumpur. My work brings together medical training, clinical research experience and operational leadership to strengthen clinic services and support patient care.
+<mark class="intro-highlight"><strong>Medical doctor with clinical trial monitoring experience.</strong></mark> Progressed from Clinical Research Associate I to II at Aesculape Belgium-Singapore CRO (2019-October 2024), independently conducting site initiation, monitoring and close-out visits. Trial experience spans Phase III neurology and Phase IV aesthetics, including work in Singapore.
 
 
-My experience spans clinical practice, clinical trial monitoring and health research, supported by a strong foundation in research design, medical statistics, data management and visualisation. With Good Clinical Practice certification, I am committed to ethical research, data quality and patient safety. I combine analytical thinking with a collaborative approach to solve problems, improve workflows and deliver results in demanding healthcare settings.
+My background combines clinical practice, health research and clinic operations, with training in Good Clinical Practice, research design, medical statistics, data management and visualisation. Currently Clinic Manager at Klinik Inocare, Kuala Lumpur, leading operations, documentation, patient workflows and study-data coordination. Seeking a Senior CRA role focused on independent monitoring, cross-functional coordination, data quality and participant safety.
 
 Work Experience {data-icon=suitcase}
 --------------------------------------------------------------------------------
@@ -126,13 +226,13 @@ Kuala Lumpur, MY
 
 Present - Apr 2025
 
-- Lead the rebuilding of clinic operations following a management takeover, establishing a revised approach to wound care and regenerative therapy services.
-- Establish operating procedures, patient workflows, documentation practices and follow-up processes.
-- Manage staffing, supplier coordination, financial administration and the operational requirements of patient services.
-- Work with the clinic management software developer to translate operational needs into requirements for patient records, appointments, billing and inventory management.
-- Provide ongoing feedback to refine the software already in use and specify requirements for automated patient follow-up.
+- Lead clinic operations following a management takeover, rebuilding workflows and coordinating wound care and regenerative therapy services.
+- Establish operating procedures, clinical documentation practices and patient pathways, including appointments and follow-up.
+- Manage staffing, suppliers, financial administration and day-to-day requirements for patient services.
+- Translate clinic needs into software requirements for patient records, appointments, billing and inventory management in collaboration with the software developer.
+- Provide feedback on the clinic management software and define requirements for automated patient follow-up.
 - Define patient-data capture and export requirements with the developer to support planned exports of CDISC Analysis Data Model (ADaM) datasets for study analysis.
-- Coordinate the collection and completeness of data required for an ongoing study evaluating the safety of stem cell therapy in patients with knee osteoarthritis.
+- Coordinate study-data collection and review completeness for an ongoing safety study of stem cell therapy in patients with knee osteoarthritis.
 
 ```{r}
 CV %<>% print_section('working_experience')
@@ -164,9 +264,9 @@ CV %<>% print_section('short_courses')
 Research Experience {data-icon=laptop `r if (params$pdf_mode) ".page-break-before" else ""`}
 --------------------------------------------------------------------------------
 ::: aside
-I'm a medical doctor by training. In the past, I've served people in Indonesia and Malaysia and was actively involved in search and rescue following the 2006 earthquake in Indonesia. I then decided to change direction and began working as a Clinical Research Associate. In this role, I had the opportunity to help people by ensuring that clinical trials were conducted ethically and safely.
+My medical background includes clinical service in Indonesia and Malaysia and participation in search and rescue following the 2006 earthquake in Indonesia. Subsequent work as a Clinical Research Associate brought this clinical experience to site monitoring, protocol compliance and the protection of trial participants.
 
-I'm an active participant in the local R community [Malaysia R User Group](https://www.meetup.com/MY-RUserGroup/). I'm also one of the moderators in the [Analisa Data Dengan R Studio group](https://www.facebook.com/groups/analisaR/).
+Active in the local R community through the [Malaysia R User Group](https://www.meetup.com/MY-RUserGroup/) and a moderator of the [Analisa Data Dengan R Studio group](https://www.facebook.com/groups/analisaR/).
 
 :::
 
@@ -192,7 +292,7 @@ CV %<>% print_section('events_attended')
 
 ::: aside
 
-The source code is available <i class="fa fa-github"></i> [Github](https://github.com/DrJohan/johancvcra).
+Source code is available on <i class="fa fa-github"></i> [GitHub](https://github.com/DrJohan/johancvcra).
 Last updated on `r Sys.Date()`. The most recent version of this CV is [available here](https://drjohan.github.io/johancvcra/index.html)
 
 :::

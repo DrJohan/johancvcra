@@ -34,8 +34,13 @@ rmarkdown::render("cv.rmd",
                   output_file = basename(tmp_html_cv_loc),
                   output_dir = dirname(tmp_html_cv_loc))
 
-# Convert to PDF using Pagedown
-pagedown::chrome_print(input = tmp_html_cv_loc,
+# Open the self-contained HTML directly so incidental local-server requests
+# (such as favicon.ico) cannot interrupt PDF export.
+pdf_input_url <- paste0(
+  if (.Platform$OS.type == "windows") "file:///" else "file://",
+  utils::URLencode(normalizePath(tmp_html_cv_loc, winslash = "/", mustWork = TRUE))
+)
+pagedown::chrome_print(input = pdf_input_url,
                        output = "drjohan_cv.pdf",
                        wait = 3,
                        timeout = 90,
